@@ -4,6 +4,11 @@
  */
 package main;
 
+import ChainOfResponsibility.AsistenteAtencionUsuario;
+import ChainOfResponsibility.JefeInventario;
+import ChainOfResponsibility.MiembroDepartamentoTécnico;
+import ChainOfResponsibility.Responsable;
+import ChainOfResponsibility.Solicitud;
 import Iterator.BodegaNacional;
 import Iterator.Producto;
 import Iterator.Iterator;
@@ -50,5 +55,16 @@ public class Main {
                 System.out.println(producto.getNombre());
             }
         }
+        
+        
+        Responsable asistente = new AsistenteAtencionUsuario();
+        Responsable tecnico = new MiembroDepartamentoTécnico();
+        Responsable jefeInventario = new JefeInventario();
+
+        asistente.setNext(tecnico);
+        tecnico.setNext(jefeInventario);
+        Solicitud solicitud = new Solicitud(new Producto("Iphone 14", "celular", 120),"true",252.2,false);
+        asistente.procesarSolicitud(solicitud);
+        
     }
 }
