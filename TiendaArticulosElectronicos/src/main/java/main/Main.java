@@ -12,6 +12,14 @@ import ChainOfResponsibility.Solicitud;
 import Iterator.BodegaNacional;
 import Iterator.Producto;
 import Iterator.Iterator;
+import Strategy.Area;
+import Strategy.Automotriz;
+import Strategy.Ciclista;
+import Strategy.Distribucion;
+import Strategy.Ferrea;
+import Strategy.Fluvial;
+import Strategy.Transporte;
+import java.util.Scanner;
 
 /**
  *
@@ -21,6 +29,8 @@ public class Main {
 
     public static void main(String[] args) {
         BodegaNacional inventario = new BodegaNacional();
+        
+        Scanner sc = new Scanner(System.in);
 
         inventario.agregarProducto(new Producto("Iphone 14", "celular", 120));
         inventario.agregarProducto(new Producto("Riviera", "televisión", 50));
@@ -30,6 +40,9 @@ public class Main {
         inventario.agregarProducto(new Producto("Lenovo Legion", "laptop", 80));
         inventario.agregarProducto(new Producto("LG", "televisión", 90));
         inventario.agregarProducto(new Producto("Huawei y5", "celular", 5));
+        
+        Producto prueba = new Producto("HP", "laptop", 50);
+        
 
         System.out.println("----- Comprador Web navegando -----");
         Iterator compradorIterator = inventario.crearIterador();
@@ -65,6 +78,45 @@ public class Main {
         tecnico.setNext(jefeInventario);
         Solicitud solicitud = new Solicitud(new Producto("Iphone 14", "celular", 120),"true",252.2,false);
         asistente.procesarSolicitud(solicitud);
+        
+        System.out.println("\nSeleccione el vehiculo para llevar el articulo: ");
+        System.out.println("\n1. Carro"
+                + "\n2. Bicicleta"
+                + "\n3. Tren"
+                + "\n4. Avion"
+                + "\n5. Fluvial");
+
+        int opcion = 0;
+        System.out.print("Opcion:");
+        opcion = sc.nextInt();
+        
+        
+        switch(opcion){
+            case 1:
+                Distribucion transporte = new Distribucion(new Automotriz());
+                System.out.println(transporte.realizarDistribucion(prueba));
+                break;
+            case 2:
+                transporte = new Distribucion(new Ciclista());
+                System.out.println(transporte.realizarDistribucion(prueba));
+                break;
+            case 3:
+                transporte = new Distribucion(new Ferrea());
+                System.out.println(transporte.realizarDistribucion(prueba));
+                break;
+            case 4:
+                transporte = new Distribucion(new Area());
+                System.out.println(transporte.realizarDistribucion(prueba));
+                break;
+            case 5:
+                transporte = new Distribucion(new Fluvial());
+                System.out.println(transporte.realizarDistribucion(prueba));
+                break;
+                
+        }
+        
+        
+        
         
     }
 }
